@@ -356,10 +356,10 @@ void Sky::render()
 			for (video::S3DVertex &vertex : vertices) {
 				if (wicked_time_of_day < 0.5)
 					// Switch from -Z (south) to +X (east)
-					vertex.Pos.rotateXZBy(90);
+					vertex.Pos.rotateXZBy(m_sun_inclinaison);
 				else
 					// Switch from -Z (south) to -X (west)
-					vertex.Pos.rotateXZBy(-90);
+					vertex.Pos.rotateXZBy(-m_sun_inclinaison);
 			}
 			driver->drawIndexedTriangleFan(&vertices[0], 4, indices, 2);
 		}
