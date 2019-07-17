@@ -659,7 +659,7 @@ void Sky::draw_sun(video::IVideoDriver *driver, float sunsize, const video::SCol
 		else
 			c = video::SColor(255, 255, 255, 255);
 		draw_sky_body(vertices, -d, d, c);
-		place_sky_body(vertices, 90, wicked_time_of_day * 360 - 90);
+		place_sky_body(vertices, m_sun_tilt, wicked_time_of_day * 360 - 90);
 		driver->drawIndexedTriangleFan(&vertices[0], 4, indices, 2);
 	}
 }
