@@ -356,10 +356,10 @@ void Sky::render()
 			for (video::S3DVertex &vertex : vertices) {
 				if (wicked_time_of_day < 0.5)
 					// Switch from -Z (south) to +X (east)
-					vertex.Pos.rotateXZBy(m_sun_inclinaison);
+					vertex.Pos.rotateXZBy(m_sun_tilt);
 				else
 					// Switch from -Z (south) to -X (west)
-					vertex.Pos.rotateXZBy(-m_sun_inclinaison);
+					vertex.Pos.rotateXZBy(-m_sun_tilt);
 			}
 			driver->drawIndexedTriangleFan(&vertices[0], 4, indices, 2);
 		}
@@ -647,7 +647,7 @@ void Sky::draw_sun(video::IVideoDriver *driver, float sunsize, const video::SCol
 		const video::SColor colors[4] = {c1, c2, suncolor, suncolor2};
 		for (int i = 0; i < 4; i++) {
 			draw_sky_body(vertices, -sunsizes[i], sunsizes[i], colors[i]);
-			place_sky_body(vertices, 90, wicked_time_of_day * 360 - 90);
+			place_sky_body(vertices, m_sun_tilt, wicked_time_of_day * 360 - 90);
 			driver->drawIndexedTriangleFan(&vertices[0], 4, indices, 2);
 		}
 	} else {

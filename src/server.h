@@ -311,6 +311,7 @@ public:
 	void setClouds(RemotePlayer *player, const CloudParams &params);
 
 	bool overrideDayNightRatio(RemotePlayer *player, bool do_override, float brightness);
+	bool sunTilt(RemotePlayer *player, int tilt);
 
 	/* con::PeerHandler implementation. */
 	void peerAdded(con::Peer *peer);
@@ -412,6 +413,7 @@ private:
 			bool &clouds);
 	void SendCloudParams(session_t peer_id, const CloudParams &params);
 	void SendOverrideDayNightRatio(session_t peer_id, bool do_override, float ratio);
+	void SendSunTilt(session_t peer_id, int tilt);
 	void broadcastModChannelMessage(const std::string &channel,
 			const std::string &message, session_t from_peer);
 

@@ -1828,6 +1828,27 @@ int ObjectRef::l_get_day_night_ratio(lua_State *L)
 	return 1;
 }
 
+// sun_tilt(self, tilt)
+int ObjectRef::l_sun_tilt(lua_State *L)
+{
+	NO_MAP_LOCK_REQUIRED;
+	ObjectRef *ref = checkobject(L, 1);
+	RemotePlayer *player = getplayer(ref);
+	if (player == NULL)
+		return 0;
+
+	int tilt = 90;
+	if (!lua_isnil(L, 2)) {
+		tilt = (int)(readParam<float>(L, 2));
+	}
+
+	if (!getServer(L)->sunTilt(player, tilt))
+		return 0;
+
+	lua_pushboolean(L, true);
+	return 1;
+}
+
 ObjectRef::ObjectRef(ServerActiveObject *object):
 	m_object(object)
 {
@@ -1968,6 +1989,7 @@ luaL_Reg ObjectRef::methods[] = {
 	luamethod(ObjectRef, set_clouds),
 	luamethod(ObjectRef, get_clouds),
 	luamethod(ObjectRef, override_day_night_ratio),
+	luamethod(ObjectRef, sun_tilt),
 	luamethod(ObjectRef, get_day_night_ratio),
 	luamethod(ObjectRef, set_local_animation),
 	luamethod(ObjectRef, get_local_animation),

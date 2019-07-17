@@ -670,7 +670,13 @@ enum ToClientCommand
 		u8[len] formspec
 	*/
 
-	TOCLIENT_NUM_MSG_TYPES = 0x62,
+	TOCLIENT_SUN_TILT = 0x62,
+	/*
+	 	int tilt
+	*/
+
+	TOCLIENT_NUM_MSG_TYPES = 0x63,
+
 };
 
 enum ToServerCommand

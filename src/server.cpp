@@ -1806,6 +1806,14 @@ void Server::SendOverrideDayNightRatio(session_t peer_id, bool do_override,
 	Send(&pkt);
 }
 
+void Server::SendSunTilt(session_t peer_id, int tilt)
+{
+	NetworkPacket pkt(TOCLIENT_SUN_TILT, 0, peer_id);
+	pkt << tilt;
+
+	Send(&pkt);
+}
+
 void Server::SendTimeOfDay(session_t peer_id, u16 time, f32 time_speed)
 {
 	NetworkPacket pkt(TOCLIENT_TIME_OF_DAY, 0, peer_id);
@@ -3270,6 +3278,16 @@ bool Server::overrideDayNightRatio(RemotePlayer *player, bool do_override,
 
 	player->overrideDayNightRatio(do_override, ratio);
 	SendOverrideDayNightRatio(player->getPeerId(), do_override, ratio);
+	return true;
+}
+
+bool Server::sunTilt(RemotePlayer *player, int tilt)
+{
+	if (!player)
+		return false;
+
+	player->sunTilt(tilt);
+	SendSunTilt(player->getPeerId(), tilt);
 	return true;
 }
 

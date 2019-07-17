@@ -69,6 +69,11 @@ public:
 		*ratio = m_day_night_ratio;
 	}
 
+	void sunTilt(int tilt)
+	{
+		m_sun_tilt = tilt;
+	}
+
 	void setHotbarImage(const std::string &name) { hud_hotbar_image = name; }
 
 	const std::string &getHotbarImage() const { return hud_hotbar_image; }
@@ -163,6 +168,7 @@ private:
 
 	bool m_day_night_ratio_do_override = false;
 	float m_day_night_ratio;
+	int m_sun_tilt;
 	std::string hud_hotbar_image = "";
 	std::string hud_hotbar_selected_image = "";
 

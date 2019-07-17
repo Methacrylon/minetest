@@ -80,6 +80,7 @@ public:
 		m_skycolor = skycolor;
 	}
 	void setBodiesVisible(bool visible) { m_bodies_visible = visible; }
+	void setSunTilt(int tilt) {m_sun_tilt = tilt; }
 
 private:
 	aabb3f m_box;
@@ -135,7 +136,7 @@ private:
 	bool m_clouds_enabled = true; // Initialised to true, reset only by set_sky API
 	bool m_directional_colored_fog;
 	bool m_bodies_visible = true; // sun, moon, stars
-	int m_sun_inclinaison = 45;
+	int m_sun_tilt = 90;
 	video::SColorf m_bgcolor_bright_f = video::SColorf(1.0f, 1.0f, 1.0f, 1.0f);
 	video::SColorf m_skycolor_bright_f = video::SColorf(1.0f, 1.0f, 1.0f, 1.0f);
 	video::SColorf m_cloudcolor_bright_f = video::SColorf(1.0f, 1.0f, 1.0f, 1.0f);

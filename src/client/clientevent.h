@@ -39,6 +39,7 @@ enum ClientEventType : u8
 	CE_HUDCHANGE,
 	CE_SET_SKY,
 	CE_OVERRIDE_DAY_NIGHT_RATIO,
+	CE_SUN_TILT,
 	CE_CLOUD_PARAMS,
 	CLIENTEVENT_MAX,
 };
@@ -158,6 +159,10 @@ struct ClientEvent
 			bool do_override;
 			float ratio_f;
 		} override_day_night_ratio;
+		struct
+		{
+			int tilt;
+		} sun_tilt;
 		struct
 		{
 			f32 density;

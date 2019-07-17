@@ -1290,6 +1290,18 @@ void Client::handleCommand_OverrideDayNightRatio(NetworkPacket* pkt)
 	m_client_event_queue.push(event);
 }
 
+void Client::handleCommand_SunTilt(NetworkPacket* pkt)
+{
+	int tilt;
+
+	*pkt >> tilt;
+
+	ClientEvent *event = new ClientEvent();
+	event->type                                 = CE_SUN_TILT;
+	event->sun_tilt.tilt = tilt;
+	m_client_event_queue.push(event);
+}
+
 void Client::handleCommand_LocalPlayerAnimations(NetworkPacket* pkt)
 {
 	LocalPlayer *player = m_env.getLocalPlayer();

@@ -800,6 +800,7 @@ private:
 	void handleClientEvent_SetSky(ClientEvent *event, CameraOrientation *cam);
 	void handleClientEvent_OverrideDayNigthRatio(ClientEvent *event,
 		CameraOrientation *cam);
+	void handleClientEvent_SunTilt(ClientEvent *event, CameraOrientation *cam);
 	void handleClientEvent_CloudParams(ClientEvent *event, CameraOrientation *cam);
 
 	void updateChat(f32 dtime, const v2u32 &screensize);
@@ -2522,6 +2523,7 @@ const ClientEventHandler Game::clientEventHandler[CLIENTEVENT_MAX] = {
 	{&Game::handleClientEvent_HudChange},
 	{&Game::handleClientEvent_SetSky},
 	{&Game::handleClientEvent_OverrideDayNigthRatio},
+	{&Game::handleClientEvent_SunTilt},
 	{&Game::handleClientEvent_CloudParams},
 };
 
@@ -2783,6 +2785,12 @@ void Game::handleClientEvent_OverrideDayNigthRatio(ClientEvent *event,
 		event->override_day_night_ratio.ratio_f * 1000.0f);
 }
 
+void Game::handleClientEvent_SunTilt(ClientEvent *event,
+		CameraOrientation *cam)
+{
+	int tilt = event->sun_tilt.tilt;
+	sky->setSunTilt(tilt);
+}
 void Game::handleClientEvent_CloudParams(ClientEvent *event, CameraOrientation *cam)
 {
 	if (!clouds)
