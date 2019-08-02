@@ -118,8 +118,8 @@ void Sky::render()
 	if (!m_visible)
 		return;
 
-	video::IVideoDriver *driver = SceneManager->getVideoDriver();
-	scene::ICameraSceneNode *camera = SceneManager->getActiveCamera();
+	video::IVideoDriver* driver = SceneManager->getVideoDriver();
+	scene::ICameraSceneNode* camera = SceneManager->getActiveCamera();
 
 	if (!camera || !driver)
 		return;
@@ -337,7 +337,7 @@ void Sky::render()
 				indices, SKY_STAR_COUNT, video::EVT_STANDARD,
 				scene::EPT_QUADS, video::EIT_16BIT);
 #endif
-		} while (false);
+		} while(false);
 
 		// Draw sunrise/sunset horizon glow texture (textures/base/pack/sunrisebg.png)
 		{
@@ -655,7 +655,7 @@ void Sky::draw_sun(video::IVideoDriver *driver, float sunsize, const video::SCol
 		float d = sunsize * 1.7;
 		video::SColor c;
 		if (m_sun_tonemap)
-			c = video::SColor(0, 0, 0, 0);
+			c = video::SColor (0, 0, 0, 0);
 		else
 			c = video::SColor(255, 255, 255, 255);
 		draw_sky_body(vertices, -d, d, c);
@@ -663,6 +663,40 @@ void Sky::draw_sun(video::IVideoDriver *driver, float sunsize, const video::SCol
 		driver->drawIndexedTriangleFan(&vertices[0], 4, indices, 2);
 	}
 }
+
+
+void Sky::draw_moon(video::IVideoDriver *driver, float moonsize, video::SColor mooncolor, video::SColor mooncolor2, float wicked_time_of_day) {
+	static const u16 indices[4] = {0, 1, 2, 3};
+	std::array<video::S3DVertex, 4> vertices;
+	if (!m_moon_texture) {
+		driver->setMaterial(m_materials[1]);
+		const float moonsizes_1[4] = {-moonsize * 1.9f, -moonsize * 1.3f, -moonsize, -moonsize};
+		const float moonsizes_2[4] = {moonsize * 1.9f, moonsize * 1.3f, moonsize, moonsize * 0.6f};
+		video::SColor c1 = mooncolor;
+		video::SColor c2 = mooncolor;
+		c1.setAlpha(0.05 * 255);
+		c2.setAlpha(0.15 * 255);
+		const video::SColor colors[4] = {c1, c2, mooncolor, mooncolor2};
+		for (int i = 0; i<4; i++) {
+			vertices = draw_sky_body(moonsizes_1[i], moonsizes_2[i], colors[i]);
+			vertices = place_sky_body(vertices, -90, wicked_time_of_day * 360 - 90);
+			driver->drawIndexedTriangleFan(&vertices[0], 4, indices, 2);
+		}
+	} else {
+		driver->setMaterial(m_materials[4]);
+		float d = moonsize * 1.9;
+		video::SColor c;
+		if (m_moon_tonemap)
+			c = video::SColor (0, 0, 0, 0);
+		else
+			c = video::SColor (255, 255, 255, 255);
+		vertices = draw_sky_body(-d, d, c);
+		vertices = place_sky_body(vertices, -90, wicked_time_of_day * 360 - 90);
+		driver->drawIndexedTriangleFan(&vertices[0], 4, indices, 2);
+	}
+}
+
+
 
 
 void Sky::draw_moon(video::IVideoDriver *driver, float moonsize, const video::SColor &mooncolor,
